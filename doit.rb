@@ -7,11 +7,13 @@ DB.loggers << Logger.new($stdout)
 
 require_relative './models.rb'
 
+# This one doesn't work
 vendors = Vendor
             .where(:user_id => 1)
             .eager(:last_edit => proc {|ds| ds.reverse_order(:created_at).clone(:eager_limit => 1) })
             .all
 
+# This one _does_ work...
 # vendors = Vendor
 #             .where(:user_id => 1)
 #             .eager(:last_edit => proc {|ds| ds.reverse_order(:created_at) })
